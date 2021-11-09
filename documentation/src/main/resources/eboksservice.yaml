@@ -23,24 +23,23 @@ servers:
           - 8080
         default: 8080
 paths:
-  /eboks-service/hello:
+  /eboks-service/send:
     post:
-      summary: Call the thugs service
-      description: Post your name and get some hugs or meet some thugs.
+      summary: Send eboks besked
+      description: Send en besked til en persons eboks vha den angivne skabelon
       requestBody:
-        description: Your name
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/helloRequest'
+              $ref: '#/components/schemas/sendRequest'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/helloResponse'
+                $ref: '#/components/schemas/sendResponse'
 
 components:
   responses:
@@ -50,28 +49,23 @@ components:
       description: "Unauthorized. This could be because: <br> * The calling system has not been properly authenticated."
     '403':
       description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
-  schemas:
-    helloResponse:
-      type: object
-      required:
-        - name
-        - now
-      properties:
-        name:
-          description: Your name
-          type: string
-          example: "John Doe"
-        now:
-          description: Time request was receved
-          type: string
-          format: date-time
 
-    helloRequest:
+  schemas:
+    sendResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    sendRequest:
       type: object
       required:
-        - name
+        - cpr
+        - template
       properties:
-        name:
-          description: Your name
+        cpr:
+          description: CPR nummer på modtageren
           type: string
-          example: "John Doe"
+        template:
+          description: Navnet på den skabelon der skal anvendes
+          type: string

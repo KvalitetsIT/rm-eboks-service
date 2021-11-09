@@ -107,7 +107,7 @@
 									<inline>
 										<files>
 											<file>
-												<source>${project.basedir}/src/main/resources/helloservice.yaml</source>
+												<source>${project.basedir}/src/main/resources/eboksservice.yaml</source>
 												<destName>${git.commit.id.describe}.yaml</destName>
 											</file>
 											<file>
@@ -150,7 +150,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/helloservice.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/eboksservice.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<configOptions>
 								<sourceFolder>src/test/java</sourceFolder>
@@ -169,7 +169,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/helloservice.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/eboksservice.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<sourceFolder>src/main/java</sourceFolder>

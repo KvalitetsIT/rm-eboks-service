@@ -1,6 +1,6 @@
 ![Build Status](https://github.com/KvalitetsIT/rm-eboks-service/workflows/CICD/badge.svg) ![Test Coverage](.github/badges/jacoco.svg)
 # rm-eboks-service
-
+Eboks service for Region Midt
 ## Endpoints
 
 The service is listening for connections on port 8080.

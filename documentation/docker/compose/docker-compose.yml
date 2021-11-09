@@ -9,7 +9,7 @@ services:
       - ./frontend.json:/caddy/config.json
      ports:
       - 8080:80
-   helloservice:
+   eboksservice:
      image: kvalitetsit/rm-eboks-service:latest
      environment:
       - usercontext_header_name=X-Test-Auth
