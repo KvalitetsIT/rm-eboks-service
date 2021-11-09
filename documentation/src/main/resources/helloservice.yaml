@@ -1,13 +1,10 @@
 openapi: 3.0.0
 info:
-  title: Kithugs
-  description: API description for KITHUGS.
+  title: Eboks Service
+  description: Eboks Service
   version: "1.0.0"
   contact:
     email: development@kvalitetitsit.dk
-tags:
-  - name: KITHUGS
-    description: KITHUGS related API's
 
 servers:
   - url: '{protocol}://{environment}:{port}'
@@ -26,10 +23,8 @@ servers:
           - 8080
         default: 8080
 paths:
-  /v1/hello:
+  /eboks-service/hello:
     post:
-      tags:
-        - KITHUGS
       summary: Call the thugs service
       description: Post your name and get some hugs or meet some thugs.
       requestBody:

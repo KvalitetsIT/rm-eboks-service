@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rm-eboks-service</artifactId>
-        <groupId>dk.kvalitetsit.rm-eboks-service</groupId>
+        <groupId>dk.rm.eboks-service</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,17 +13,17 @@
 
     <dependencies>
         <dependency>
-            <groupId>dk.kvalitetsit.rm-eboks-service</groupId>
+            <groupId>dk.rm.eboks-service</groupId>
             <artifactId>service</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>dk.kvalitetsit.rm-eboks-service</groupId>
+            <groupId>dk.rm.eboks-service</groupId>
             <artifactId>integrationtest</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>dk.kvalitetsit.rm-eboks-service</groupId>
+            <groupId>dk.rm.eboks-service</groupId>
             <artifactId>web</artifactId>
         </dependency>
     </dependencies>
