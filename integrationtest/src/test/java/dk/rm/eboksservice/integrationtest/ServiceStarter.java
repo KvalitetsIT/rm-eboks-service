@@ -22,7 +22,10 @@ public class ServiceStarter {
     public void startServices() {
         dockerNetwork = Network.newNetwork();
 
-        SpringApplication.run((EboksServiceApplication.class));
+        SpringApplication.run(EboksServiceApplication.class,
+                "--DIAS_MAIL_SERVICE_URL=test",
+                "--DIAS_MAIL_SERVICE_RECIPIENT=recipient@test.dk",
+                "--DIAS_MAIL_SERVICE_SENDER=sender@test.dk");
     }
 
     public GenericContainer startServicesInDocker() {

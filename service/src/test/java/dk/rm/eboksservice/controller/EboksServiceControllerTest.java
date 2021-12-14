@@ -1,5 +1,6 @@
 package dk.rm.eboksservice.controller;
 
+import dk.rm.eboksservice.dias.DiasMailException;
 import dk.rm.eboksservice.service.EboksService;
 import dk.rm.eboksservice.service.model.EboksServiceInput;
 import dk.rm.eboksservice.service.model.EboksServiceOutput;
@@ -27,7 +28,7 @@ public class EboksServiceControllerTest {
     }
 
     @Test
-    public void testCallController() {
+    public void testCallController() throws DiasMailException {
         var request = new SendRequest();
         request.setCpr("1111111111");
         request.setTemplate("TestTemplate");

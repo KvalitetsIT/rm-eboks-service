@@ -14,6 +14,9 @@ Health URL that can be used for readiness probe: `http://localhost:8081/actuator
 
 | Environment variable | Description | Required |
 |----------------------|-------------|---------- |
+| DIAS_MAIL_SERVICE_URL | URL to the dias mail service. | Yes |
+| DIAS_MAIL_SERVICE_RECIPIENT | Recipient for the dias mail service. | Yes |
+| DIAS_MAIL_SERVICE_SENDER | Sender for the dias mail service. | Yes |
 | LOG_LEVEL | Log Level for applikation  log. Defaults to INFO. | No |
 | LOG_LEVEL_FRAMEWORK | Log level for framework. Defaults to INFO. | No |
 | CORRELATION_ID | HTTP header to take correlation id from. Used to correlate log messages. Defaults to "x-request-id". | No

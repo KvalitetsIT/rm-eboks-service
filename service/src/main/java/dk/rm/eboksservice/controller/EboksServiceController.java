@@ -1,7 +1,9 @@
 package dk.rm.eboksservice.controller;
 
+import dk.rm.eboksservice.dias.DiasMailException;
 import dk.rm.eboksservice.service.EboksService;
 import dk.rm.eboksservice.service.model.EboksServiceInput;
+import dk.rm.eboksservice.service.model.EboksServiceOutput;
 import org.openapitools.api.DefaultApi;
 import org.openapitools.model.SendRequest;
 import org.openapitools.model.SendResponse;
@@ -27,10 +29,15 @@ public class EboksServiceController implements DefaultApi {
         serviceInput.setCpr(sendRequest.getCpr());
         serviceInput.setTemplate(sendRequest.getTemplate());
 
-        var serviceResponse = eboksService.eboksServiceBusinessLogic(serviceInput);
+        try {
+            EboksServiceOutput serviceResponse = eboksService.eboksServiceBusinessLogic(serviceInput);
+            var sendResponse = new SendResponse();
+            sendResponse.setMessage(serviceResponse.getMessage());
+            return ResponseEntity.ok(sendResponse);
+        } catch (Exception e) {
+            logger.error("Call to eboksServiceSendPost failed", e);
+            return ResponseEntity.internalServerError().build();
+        }
 
-        var sendResponse = new SendResponse();
-        sendResponse.setMessage(serviceResponse.getMessage());
-        return ResponseEntity.ok(sendResponse);
     }
 }
