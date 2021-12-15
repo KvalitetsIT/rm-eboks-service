@@ -7,6 +7,9 @@ import org.openapitools.client.ApiException;
 import org.openapitools.client.api.DefaultApi;
 import org.openapitools.client.model.SendRequest;
 import org.openapitools.client.model.SendResponse;
+import org.openapitools.client.model.TemplateResponse;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -50,5 +53,16 @@ public class EboksServiceIT extends AbstractIntegrationTest {
             assertTrue(e.getResponseBody().contains("Invalid template specified: invalid template"));
         }
         serviceStarter.getDiasServerMock().verify(request(), VerificationTimes.exactly(0));
+    }
+
+    @Test
+    public void testGetTemplates() throws Exception {
+        List<TemplateResponse> templates = serviceApi.eboksServiceTemplatesGet();
+        assertNotNull(templates);
+        assertEquals(2, templates.size());
+        assertTrue(templates.stream()
+                .anyMatch(template -> "test".equals(template.getName()) && "test template".equals(template.getDescription())));
+        assertTrue(templates.stream()
+                .anyMatch(template -> "test2".equals(template.getName()) && "another test template".equals(template.getDescription())));
     }
 }
