@@ -5,5 +5,5 @@ import dk.rm.eboksservice.service.model.EboksServiceOutput;
 import dk.rm.eboksservice.service.model.EboksServiceInput;
 
 public interface EboksService {
-    EboksServiceOutput eboksServiceBusinessLogic(EboksServiceInput input) throws DiasMailException;
+    EboksServiceOutput eboksServiceBusinessLogic(EboksServiceInput input) throws DiasMailException, EboksServiceException;
 }

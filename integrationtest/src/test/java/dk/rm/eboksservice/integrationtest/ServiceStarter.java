@@ -21,11 +21,13 @@ public class ServiceStarter {
 
     public void startServices() {
         dockerNetwork = Network.newNetwork();
+        String templatesPath = this.getClass().getResource("/templates.json").getPath();
 
         SpringApplication.run(EboksServiceApplication.class,
                 "--DIAS_MAIL_SERVICE_URL=test",
                 "--DIAS_MAIL_SERVICE_RECIPIENT=recipient@test.dk",
-                "--DIAS_MAIL_SERVICE_SENDER=sender@test.dk");
+                "--DIAS_MAIL_SERVICE_SENDER=sender@test.dk",
+                "--TEMPLATES_PATH=" + templatesPath);
     }
 
     public GenericContainer startServicesInDocker() {

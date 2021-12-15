@@ -20,6 +20,9 @@ public class EboksServiceProperties {
     @Value( "${DIAS_MAIL_SERVICE_SENDER}" )
     private String diasMailServiceSender;
 
+    @Value( "${TEMPLATES_PATH}" )
+    private String templatesPath;
+
     @PostConstruct
     private void init() {
         logger.info(toString());
@@ -31,6 +34,7 @@ public class EboksServiceProperties {
                 "DIAS_MAIL_SERVICE_URL=" + getDiasMailServiceUrl() +
                 ", DIAS_MAIL_SERVICE_RECIPIENT=" + getDiasMailServiceRecipient() +
                 ", DIAS_MAIL_SERVICE_SENDER=" + getDiasMailServiceSender() +
+                ", TEMPLATES_PATH=" + getTemplatesPath() +
                 '}';
     }
 
@@ -44,5 +48,9 @@ public class EboksServiceProperties {
 
     public String getDiasMailServiceSender() {
         return diasMailServiceSender;
+    }
+
+    public String getTemplatesPath() {
+        return templatesPath;
     }
 }
