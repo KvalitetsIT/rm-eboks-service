@@ -17,7 +17,7 @@ public class DiasMailClient {
     private final URI url;
     private final String recipient;
     private final String sender;
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public DiasMailClient(EboksServiceProperties properties, RestTemplate restTemplate) throws URISyntaxException {
         this.url = new URI(properties.getDiasMailServiceUrl());

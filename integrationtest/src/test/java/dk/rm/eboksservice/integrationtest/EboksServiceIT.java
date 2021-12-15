@@ -1,5 +1,6 @@
 package dk.rm.eboksservice.integrationtest;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
@@ -20,6 +21,7 @@ public class EboksServiceIT extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore ("We need a test dias mail server url")
     public void testCallService() throws ApiException {
         var input = new SendRequest();
         input.setCpr("1111111111");
