@@ -24,6 +24,6 @@ public class EboksServiceImpl implements EboksService {
         }
         Template template = templates.get(input.getTemplate());
         diasMailClient.sendMail(input.getCpr(), template.getTemplateBody());
-        return new EboksServiceOutput();
+        return new EboksServiceOutput("success");
     }
 }

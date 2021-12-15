@@ -36,7 +36,7 @@ public class EboksServiceControllerTest {
 
         var expectedDate = ZonedDateTime.now();
         Mockito.when(eboksService.eboksServiceBusinessLogic(Mockito.any())).then(input -> {
-            EboksServiceOutput output = new EboksServiceOutput();
+            EboksServiceOutput output = new EboksServiceOutput("success");
             output.setMessage(input.getArgument(0, EboksServiceInput.class).getCpr());
             return output;
         });

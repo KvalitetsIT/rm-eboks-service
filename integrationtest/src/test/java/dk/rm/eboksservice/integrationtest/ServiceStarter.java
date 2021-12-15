@@ -1,7 +1,12 @@
 package dk.rm.eboksservice.integrationtest;
 
 import com.github.dockerjava.api.model.VolumesFrom;
+import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.HttpStatus;
 import dk.rm.eboksservice.EboksServiceApplication;
+import org.mockserver.client.MockServerClient;
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -17,14 +22,17 @@ public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
     private static final Logger serviceLogger = LoggerFactory.getLogger("rm-eboks-service");
 
+    private static ClientAndServer diasServerMockBuilder;
+    private MockServerClient diasServerMock;
     private Network dockerNetwork;
 
     public void startServices() {
         dockerNetwork = Network.newNetwork();
+        startDiasServer();
         String templatesPath = this.getClass().getResource("/templates.json").getPath();
 
         SpringApplication.run(EboksServiceApplication.class,
-                "--DIAS_MAIL_SERVICE_URL=test",
+                "--DIAS_MAIL_SERVICE_URL=http://localhost:1080/mail/send",
                 "--DIAS_MAIL_SERVICE_RECIPIENT=recipient@test.dk",
                 "--DIAS_MAIL_SERVICE_SENDER=sender@test.dk",
                 "--TEMPLATES_PATH=" + templatesPath);
@@ -64,6 +72,26 @@ public class ServiceStarter {
         attachLogger(serviceLogger, service);
 
         return service;
+    }
+
+    private void startDiasServer() {
+        diasServerMockBuilder = ClientAndServer.startClientAndServer(1080);
+        diasServerMock = new MockServerClient("localhost", 1080);
+
+        diasServerMock.when(HttpRequest.request()
+                        .withMethod("POST")
+                        .withPath("/mail/send"))
+                .respond(HttpResponse.response()
+                        .withStatusCode(HttpStatus.SC_OK)
+        );
+    }
+
+    protected void stopDiasServer() {
+        diasServerMockBuilder.stop();
+    }
+
+    public MockServerClient getDiasServerMock() {
+        return diasServerMock;
     }
 
     private boolean containerRunning(String containerName) {

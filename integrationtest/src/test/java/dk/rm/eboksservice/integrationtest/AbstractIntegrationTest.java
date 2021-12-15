@@ -1,5 +1,6 @@
 package dk.rm.eboksservice.integrationtest;
 
+import org.junit.AfterClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -12,6 +13,7 @@ public abstract class AbstractIntegrationTest {
 
     private static GenericContainer eboksService;
     private static String apiBasePath;
+    protected static ServiceStarter serviceStarter;
 
     static {
         Runtime.getRuntime().addShutdownHook(new Thread()
@@ -32,11 +34,15 @@ public abstract class AbstractIntegrationTest {
         }
     }
 
+    @AfterClass
+    public static void afterClass() throws Exception {
+        serviceStarter.stopDiasServer();
+    }
+
     private static void setup() throws IOException, URISyntaxException {
         var runInDocker = Boolean.getBoolean("runInDocker");
         logger.info("Running integration test in docker container: " + runInDocker);
 
-        ServiceStarter serviceStarter;
         serviceStarter = new ServiceStarter();
         if(runInDocker) {
             eboksService = serviceStarter.startServicesInDocker();

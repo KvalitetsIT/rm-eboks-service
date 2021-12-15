@@ -129,14 +129,8 @@
 
 			<dependency>
 				<groupId>org.mock-server</groupId>
-				<artifactId>mockserver</artifactId>
-				<version>3.12</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.mock-server</groupId>
-				<artifactId>mockserver-client-java</artifactId>
-				<version>3.12</version>
+				<artifactId>mockserver-netty</artifactId>
+				<version>5.11.2</version>
 			</dependency>
 
 			<!-- Code coverage -->
