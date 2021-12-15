@@ -41,6 +41,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/sendResponse'
 
+  /eboks-service/templates:
+    get:
+      summary: Mail skabeloner
+      description: Se navn og beskrivelse af konfigurerede mail skabeloner
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/templatesResponse'
+
 components:
   responses:
     '400':
@@ -68,4 +80,17 @@ components:
           type: string
         template:
           description: Navnet på den skabelon der skal anvendes
+          type: string
+
+    templatesResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/templateResponse'
+
+    templateResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
           type: string

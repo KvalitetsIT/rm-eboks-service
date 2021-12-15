@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,7 +31,7 @@ public class EboksServiceImplTest {
         input.setCpr("1234567890");
         input.setTemplate("test");
 
-        var result = eboksService.eboksServiceBusinessLogic(input);
+        var result = eboksService.sendToEboks(input);
         assertNotNull(result);
         Mockito.verify(diasMailClient).sendMail("1234567890", "this is a template");
     }
@@ -44,7 +43,7 @@ public class EboksServiceImplTest {
         input.setTemplate("hest");
 
         try {
-            eboksService.eboksServiceBusinessLogic(input);
+            eboksService.sendToEboks(input);
         } catch (EboksServiceException e) {
             assertEquals("Invalid template specified: hest", e.getMessage());
         }

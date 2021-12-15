@@ -6,6 +6,7 @@ import dk.rm.eboksservice.service.model.EboksServiceInput;
 import dk.rm.eboksservice.service.model.EboksServiceOutput;
 import dk.rm.eboksservice.templates.Template;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class EboksServiceImpl implements EboksService {
@@ -18,12 +19,17 @@ public class EboksServiceImpl implements EboksService {
     }
 
     @Override
-    public EboksServiceOutput eboksServiceBusinessLogic(EboksServiceInput input) throws DiasMailException, EboksServiceException {
+    public EboksServiceOutput sendToEboks(EboksServiceInput input) throws DiasMailException, EboksServiceException {
         if (!templates.containsKey(input.getTemplate())) {
             throw new EboksServiceException("Invalid template specified: " + input.getTemplate());
         }
         Template template = templates.get(input.getTemplate());
         diasMailClient.sendMail(input.getCpr(), template.getTemplateBody());
         return new EboksServiceOutput("success");
+    }
+
+    @Override
+    public Collection<Template> getTemplates() {
+        return templates.values();
     }
 }

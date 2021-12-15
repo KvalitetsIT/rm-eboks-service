@@ -8,10 +8,14 @@ import dk.rm.eboksservice.service.model.EboksServiceOutput;
 import org.openapitools.api.DefaultApi;
 import org.openapitools.model.SendRequest;
 import org.openapitools.model.SendResponse;
+import org.openapitools.model.TemplateResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class EboksServiceController implements DefaultApi {
@@ -32,7 +36,7 @@ public class EboksServiceController implements DefaultApi {
 
         var sendResponse = new SendResponse();
         try {
-            EboksServiceOutput serviceResponse = eboksService.eboksServiceBusinessLogic(serviceInput);
+            EboksServiceOutput serviceResponse = eboksService.sendToEboks(serviceInput);
             sendResponse.setMessage(serviceResponse.getMessage());
             return ResponseEntity.ok(sendResponse);
         } catch (EboksServiceException e) {
@@ -49,5 +53,16 @@ public class EboksServiceController implements DefaultApi {
             return ResponseEntity.internalServerError().body(sendResponse);
         }
 
+    }
+
+    @Override
+    public ResponseEntity<List<TemplateResponse>> eboksServiceTemplatesGet() {
+        List<TemplateResponse> templates = eboksService.getTemplates().stream().map(template -> {
+            TemplateResponse templateResponse = new TemplateResponse();
+            templateResponse.setName(template.getName());
+            templateResponse.setDescription(template.getDescription());
+            return templateResponse;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(templates);
     }
 }

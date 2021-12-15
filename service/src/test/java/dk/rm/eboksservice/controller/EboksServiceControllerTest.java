@@ -35,7 +35,7 @@ public class EboksServiceControllerTest {
         request.setTemplate("TestTemplate");
 
         var expectedDate = ZonedDateTime.now();
-        Mockito.when(eboksService.eboksServiceBusinessLogic(Mockito.any())).then(input -> {
+        Mockito.when(eboksService.sendToEboks(Mockito.any())).then(input -> {
             EboksServiceOutput output = new EboksServiceOutput("success");
             output.setMessage(input.getArgument(0, EboksServiceInput.class).getCpr());
             return output;
@@ -47,7 +47,7 @@ public class EboksServiceControllerTest {
         assertEquals(request.getCpr(), result.getBody().getMessage());
 
         var inputArgumentCaptor = ArgumentCaptor.forClass(EboksServiceInput.class);
-        Mockito.verify(eboksService, times(1)).eboksServiceBusinessLogic(inputArgumentCaptor.capture());
+        Mockito.verify(eboksService, times(1)).sendToEboks(inputArgumentCaptor.capture());
 
         assertNotNull(inputArgumentCaptor.getValue());
         assertEquals(request.getCpr(), inputArgumentCaptor.getValue().getCpr());

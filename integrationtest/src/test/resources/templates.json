@@ -3,5 +3,10 @@
     "name": "test",
     "description": "test template",
     "templateBody": "this is a template"
+  },
+  {
+    "name": "test2",
+    "description": "another test template",
+    "templateBody": "this is another template"
   }
 ]
