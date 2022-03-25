@@ -5,6 +5,7 @@ import dk.rm.eboksservice.service.EboksService;
 import dk.rm.eboksservice.service.EboksServiceException;
 import dk.rm.eboksservice.service.model.EboksServiceInput;
 import dk.rm.eboksservice.service.model.EboksServiceOutput;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.openapitools.api.DefaultApi;
 import org.openapitools.model.SendRequest;
 import org.openapitools.model.SendResponse;
@@ -20,10 +21,13 @@ import java.util.stream.Collectors;
 @RestController
 public class EboksServiceController implements DefaultApi {
     private static final Logger logger = LoggerFactory.getLogger(EboksServiceController.class);
+    private static final String ERROR_COUNTER_METRIC_NAME = "dias.mail.error.count";
     private final EboksService eboksService;
+    private final MeterRegistry meterRegistry;
 
-    public EboksServiceController(EboksService eboksService) {
+    public EboksServiceController(EboksService eboksService, MeterRegistry meterRegistry) {
         this.eboksService = eboksService;
+        this.meterRegistry = meterRegistry;
     }
 
     @Override
@@ -46,6 +50,7 @@ public class EboksServiceController implements DefaultApi {
         } catch (DiasMailException e) {
             logger.error("Call to eboksServiceSendPost failed", e);
             sendResponse.setMessage("Call to eboksServiceSendPost failed. " + e.getMessage());
+            meterRegistry.counter(ERROR_COUNTER_METRIC_NAME, "code", String.valueOf(e.getStatusCode())).increment();
             return ResponseEntity.internalServerError().body(sendResponse);
         } catch (Exception e) {
             logger.error("Call to eboksServiceSendPost failed", e);

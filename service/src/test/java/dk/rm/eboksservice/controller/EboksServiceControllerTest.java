@@ -6,6 +6,7 @@ import dk.rm.eboksservice.service.EboksServiceException;
 import dk.rm.eboksservice.service.model.EboksServiceInput;
 import dk.rm.eboksservice.service.model.EboksServiceOutput;
 import dk.rm.eboksservice.templates.Template;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -28,10 +29,10 @@ public class EboksServiceControllerTest {
     private EboksService eboksService;
 
     @Before
-    public void setup() throws EboksServiceException, DiasMailException {
+    public void setup() {
         eboksService = Mockito.mock(EboksService.class);
 
-        eboksServiceController = new EboksServiceController(eboksService);
+        eboksServiceController = new EboksServiceController(eboksService, new SimpleMeterRegistry());
     }
 
     @Test

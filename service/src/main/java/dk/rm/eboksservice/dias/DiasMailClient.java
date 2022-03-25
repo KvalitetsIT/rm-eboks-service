@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -30,9 +31,14 @@ public class DiasMailClient {
     public void sendMail(String subject, String body) throws DiasMailException {
         DiasMailRequest diasRequest = new DiasMailRequest(recipient, sender, subject, body);
         RequestEntity<DiasMailRequest> requestEntity = new RequestEntity<>(diasRequest, HttpMethod.POST, url);
-        ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.exchange(requestEntity, String.class);
+        } catch (HttpServerErrorException e) {
+            throw new DiasMailException("Dias mail service failed: " + e.getMessage(), e, e.getStatusCode().value());
+        }
         if (response.getStatusCode() != HttpStatus.OK) {
-            throw new DiasMailException("Dias mail service failed with status " + response.getStatusCodeValue() + ". " + response.getBody());
+            throw new DiasMailException("Dias mail service failed with status " + response.getStatusCodeValue() + ". " + response.getBody(), response.getStatusCodeValue());
         }
     }
 
